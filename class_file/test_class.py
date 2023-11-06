@@ -4,11 +4,11 @@ def main(page:ft.Page):
     t= ft.Text(value="Hello world!")
     page.add(t)
 
-    todo_check = ft.Checkbox(
-        label="ToDo",
-        value=False,
-    )
-    page.add(todo_check)
+    # todo_check = ft.Checkbox(
+    #     label="ToDo",
+    #     value=False,
+    # )
+    # page.add(todo_check)
 
     def button_clicked(e):
         page.add(ft.Text("Clicled!"))
