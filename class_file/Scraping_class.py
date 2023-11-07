@@ -1,18 +1,32 @@
 from bs4 import BeautifulSoup
+import urllib.parse
 import requests
+import re
+
 
 class Scraping():
-    def scraping_href(URL):
+    def __init__(self, URL) -> None:
+        self.URL = URL
+   
+    
+    def https_adder(self, href:str):
+        path = re.sub('^/', '', href)
+        return urllib.parse.urljoin(self.URL, path)
+   
+    
+    def scraping_URL(self):
+        html_text = requests.get(self.URL).text
+        soup      = BeautifulSoup(html_text, 'html.parser')
+        element_a = soup.find_all("a")
+        hrefs     = [a_tag.get("href") for a_tag in element_a]
         
-        html_text = requests.get(URL).text
-        soup = BeautifulSoup(html_text, 'html.parser')
-        
-        element_a = soup.find("a")
-        print(element_a)
-        
-        print(element_a.get("href"))
+        urls  = [self.https_adder(href) for href in hrefs if href not in [None, 'javascript:void(0);']]
+        return urls
+
 
 if __name__ == "__main__":
-    URL = f'https://animestore.docomo.ne.jp/animestore/tp_pc'
+    URL:str = 'https://animestore.docomo.ne.jp/animestore/tp_pc'
     
-    Scraping.scraping_href(URL=URL)
+    scraping = Scraping(URL)
+    scraping.scraping_URL()
+    
