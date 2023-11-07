@@ -5,10 +5,13 @@ import re
 
 
 class Scraping():
-    def __init__(self, URL) -> None:
+    def __init__(self) -> None:
+        self.URL :str
+        
+    
+    def set_URL(self, URL):
         self.URL = URL
    
-    
     def https_adder(self, href:str):
         path = re.sub('^/', '', href)
         return urllib.parse.urljoin(self.URL, path)
@@ -27,6 +30,8 @@ class Scraping():
 if __name__ == "__main__":
     URL:str = 'https://animestore.docomo.ne.jp/animestore/tp_pc'
     
-    scraping = Scraping(URL)
+    scraping = Scraping()
+    scraping.set_URL(URL)
     scraping.scraping_URL()
+    scraping.https_adder()
     
