@@ -21,7 +21,7 @@ class Crawler():
             searched_URLs.append(URL)
             
             #URLを取得
-            urls  = scraping.scraping_URLs()
+            urls  = [url for url in scraping.scraping_URLs() if url in target_domins]
             
             #titleを取得
             title = scraping.scraping_title()
@@ -42,7 +42,7 @@ class Crawler():
             
             #探し出したURLを追加
             [NO_searched_URLs.append(url) for url in urls 
-             if url in target_domins and url not in searched_URLs]
+             if url not in searched_URLs]
             
             #未探索のURLが無くなったら終了
             if NO_searched_URLs == []:

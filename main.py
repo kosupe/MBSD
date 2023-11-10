@@ -142,7 +142,6 @@ def main(page: ft.Page):
                     Top()
                 )
             elif page.route == "/view1":
-                print(page.views[-1].data)
                 pages = Crawler.crawler(start_URL = page.views[-1].data[0], target_domins=page.views[-1].data[1])
                 
                 page.views.append(
