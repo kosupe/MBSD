@@ -17,7 +17,7 @@ class Scraping():
         return urllib.parse.urljoin(self.URL, path)
    
     
-    def scraping_URL(self):
+    def scraping_URLs(self):
         html_text = requests.get(self.URL).text
         soup      = BeautifulSoup(html_text, 'html.parser')
         element_a = soup.find_all("a")
@@ -27,11 +27,24 @@ class Scraping():
         return urls
 
 
+    def scraping_title(self):
+        html_text = requests.get(self.URL).text
+        soup      = BeautifulSoup(html_text, 'html.parser')
+        element_title = soup.find_all("title")
+        
+        return [title.text for title in element_title]
+
+    
+    def scraping_keyword(self):
+        html_text = requests.get(self.URL).text
+        
+        return re.findall(r'(?<=MBSD\{)[^\}]+(?=\})', html_text)
+    
 if __name__ == "__main__":
     URL:str = 'https://animestore.docomo.ne.jp/animestore/tp_pc'
     
     scraping = Scraping()
     scraping.set_URL(URL)
-    scraping.scraping_URL()
-    scraping.https_adder()
+    urls = scraping.scraping_keyword()
+    
     
