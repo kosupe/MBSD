@@ -1,5 +1,5 @@
-from Page_class     import Page
-from Scraping_class import Scraping
+from class_file.Page_class     import Page
+from class_file.Scraping_class import Scraping
 
 class Crawler():
     
