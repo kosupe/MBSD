@@ -16,16 +16,14 @@ class Crawler():
     
     def crawler(start_URL:str, target_domins:list[str]):
         
-        searched_URLs   :list[str] = []
-        NO_searched_URLs:list[str] = [start_URL]
-        title           :list[str] = []
-        keyword         :list[str] = []
-        parameter       :dict[str] = []
-        
-        
-        pages   :list[Page] = []
-        URL     :str        = start_URL
-        scraping:Scraping   = Scraping()
+        searched_URLs   :list[str]  = []
+        NO_searched_URLs:list[str]  = [start_URL]
+        title           :list[str]  = []
+        keyword         :list[str]  = []
+        parameter       :dict[str]  = []
+        pages           :list[Page] = []
+        URL             :str        = start_URL
+        scraping        :Scraping   = Scraping()
         
         """
         テスト用

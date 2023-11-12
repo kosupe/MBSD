@@ -2,7 +2,6 @@ import flet as ft
 from class_file.Page_class    import Page
 from class_file.Crawler_class import Crawler
 
-addcounter = 0
 class Top(ft.View):
     def __init__(self):
         self.addcounter = 0
@@ -19,7 +18,8 @@ class Top(ft.View):
         ],alignment=ft.MainAxisAlignment.START,
         ),
         ]
-        super().__init__("/", controls=controls)
+        
+        super().__init__("/", controls=controls, scroll=ft.ScrollMode.ALWAYS)
         self.start_URL = start_URL
         self.target_domains = target_domains
         
@@ -66,7 +66,7 @@ class View1(ft.View):
     def __init__(self, pages:Page):
         page_count = int(1)#ページ数
         controls = [ft.AppBar(title=ft.Text("Top Page"), bgcolor=ft.colors.SURFACE_VARIANT),]      
-        super().__init__("/view1", controls=controls)
+        super().__init__("/view1", controls=controls, scroll=ft.ScrollMode.ALWAYS)
         for view_page in pages:#全てのデータを出力するための２重ループ
             controls.append(ft.Text(f'{page_count}回目'))#何ページかを表示)
             
