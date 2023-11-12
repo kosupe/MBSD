@@ -77,7 +77,7 @@ class Top(ft.View):
 #11/10_変更
 
 class View1(ft.View):
-    def __init__(self, pages:dict):
+    def __init__(self, pages:Page):
       
 
         page_count = int(1)#ページ数
