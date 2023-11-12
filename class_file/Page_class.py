@@ -3,7 +3,8 @@ import pprint
 class Page():
     """
     """
-    def __init__(self, URL, parameters, title, keyword) -> None:
+    def __init__(self, URL, parameters, title, keyword, my_URL) -> None:
+        self.my_URL    :str       = my_URL
         self.URL       :list[str] = URL
         self.title     :list[str] = title
         self.keyword   :list[str] = keyword

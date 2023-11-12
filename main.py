@@ -71,21 +71,26 @@ class View1(ft.View):
         controls = [ft.AppBar(title=ft.Text("Top Page"), bgcolor=ft.colors.SURFACE_VARIANT),]      
         super().__init__("/view1", controls=controls, scroll=ft.ScrollMode.ALWAYS)
         for view_page in pages:#全てのデータを出力するための２重ループ
-            controls.append(ft.Text(f'{page_count}回目'))#何ページかを表示)
+            controls.append(ft.Text(f'{page_count}ページ目', size=18))#何ページかを表示)
+            
+            controls.append(ft.Text(f'元URL : {view_page.my_URL}'))
             
             for URL in view_page.URL:#URLの表示
-                controls.append(ft.Text(f'URL:{URL}'))
+                controls.append(ft.Text(f'URL : {URL}'))
                 
             for title in view_page.title:#タイトルの表示
-                controls.append(ft.Text(f'title:{title}'))
+                controls.append(ft.Text(f'title : {title}'))
 
             for keyword in view_page.keyword:#キーワードの表示                
-                controls.append(ft.Text(f'keyword:{keyword}'))
+                controls.append(ft.Text(f'keyword : {keyword}'))
 
             for parameters in view_page.parameters:#パラメータの表示
-                controls.append(ft.Text(f'{parameters}'))
+                controls.append(ft.Text(f'parameters : {parameters}'))
 
+            controls.append(ft.Text(f'',size=10))
             page_count += 1#カウントアップ
+            
+            
         
 def main(page: ft.Page):
     page.title         = "ごとうぐみ"

@@ -52,6 +52,7 @@ class Crawler():
             
             #pagesに格納
             pages.append(Page(
+                my_URL     = URL,
                 URL        = urls,
                 title      = title,
                 keyword    = keyword,
