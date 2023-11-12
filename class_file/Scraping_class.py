@@ -4,6 +4,7 @@ import requests
 import re
 
 
+
 class Scraping():
     def __init__(self) -> None:
         self.URL :str
@@ -14,7 +15,6 @@ class Scraping():
             return True
         except:
             return False
-        
     
     def set_URL(self, URL):
         self.URL = URL
@@ -23,6 +23,17 @@ class Scraping():
         path = re.sub('^/', '', href)
         return urllib.parse.urljoin(self.URL, path)
    
+   
+    def scraping_parameters(self):
+        get_params = re.search('(?<=\?).*', self.URL)
+        
+
+        if get_params != None:
+            encode_params = urllib.parse.unquote(get_params.group())
+            rst = urllib.parse.parse_qs(encode_params)
+            return rst
+        return {}
+    
     
     def scraping_URLs(self):
         html_text = requests.get(self.URL).text

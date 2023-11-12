@@ -24,6 +24,8 @@ class Top(ft.View):
         self.start_URL = start_URL
         self.target_domains = target_domains
         
+        self.start_URL.current.value = "https://animestore.docomo.ne.jp/animestore/tp_pc"
+        self.target_domains[0].current.value = "animestore.docomo.ne.jp"
     def delbutton_clicked(self,e):
         if self.addcounter <= 0:#ドメイン入力欄を削除する。最低１つは残す
             return
@@ -51,7 +53,6 @@ class Top(ft.View):
         #stayt_URLが空なら何もしない
         if URL == "" or Scraping.check_valid_URL(URL) == False:
             return
-        
         domains = []
         for target_domain in self.target_domains:
             if target_domain.current.value in domains:
@@ -84,13 +85,19 @@ class View1(ft.View):
             for keyword in view_page.keyword:#キーワードの表示                
                 controls.append(ft.Text(f'keyword : {keyword}'))
 
-            for parameters in view_page.parameters:#パラメータの表示
+            """for parameters in view_page.parameters:#パラメータの表示
                 controls.append(ft.Text(f'parameters : {parameters}'))
-
+            """
+            
+            controls.append(ft.Text("parameters : {"))
+            for key in view_page.parameters:
+               controls.append(ft.Text(f"    {key} : {view_page.parameters[key]}"))
+            controls.append(ft.Text("}"))
+            
             controls.append(ft.Text(f'',size=10))
             page_count += 1#カウントアップ
             
-            
+    
         
 def main(page: ft.Page):
     page.title         = "ごとうぐみ"

@@ -27,10 +27,7 @@ class Crawler():
         URL      :str        = start_URL
         scraping :Scraping   = Scraping()
         
-        """
-        テスト用
-        """
-        test_count = 0
+        
         
         while True:
             URL = NO_searched_URLs.pop(0)
@@ -45,7 +42,7 @@ class Crawler():
             title = scraping.scraping_title()
             
             #parameterを取得
-            
+            parameter = scraping.scraping_parameters()
             
             #keywordを取得
             keyword = scraping.scraping_keyword()
@@ -67,15 +64,8 @@ class Crawler():
             if NO_searched_URLs == []:
                 return pages
             
-            test_count += 1
             
-            """
-            テスト用
-            """
-            print(test_count)
-            if test_count > 5:
-                return pages
-    
+            
     
             
 if __name__ == "__main__":
