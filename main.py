@@ -1,6 +1,7 @@
 import flet as ft
-from class_file.Page_class    import Page
-from class_file.Crawler_class import Crawler
+from class_file.Page_class     import Page
+from class_file.Crawler_class  import Crawler
+from class_file.Scraping_class import Scraping
 
 class Top(ft.View):
     def __init__(self):
@@ -46,16 +47,18 @@ class Top(ft.View):
         self.update()
 
     def button_clicked(self,e):
+        URL = self.start_URL.current.value
         #stayt_URLが空なら何もしない
-        if self.start_URL.current.value == "":
+        if URL == "" or Scraping.check_valid_URL(URL) == False:
             return
+        
         domains = []
         for target_domain in self.target_domains:
             if target_domain.current.value in domains:
                 continue
             domains.append(target_domain.current.value)
             
-        self.data = [self.start_URL.current.value, domains]
+        self.data = [URL, domains]
         e.page.go("/view1")
     
     def changed(self, e):
@@ -106,7 +109,8 @@ def main(page: ft.Page):
                 )
             elif page.route == "/view1":
                 print('view1')
-                
+                if page.views[-1].data[1] == [""]:
+                    page.views[-1].data[1] = []
                 pages = Crawler.crawler(start_URL = page.views[-1].data[0], target_domins=page.views[-1].data[1])
                 page.views.append(
                     View1(pages)

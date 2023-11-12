@@ -7,6 +7,13 @@ import re
 class Scraping():
     def __init__(self) -> None:
         self.URL :str
+    
+    def check_valid_URL(URL):
+        try:
+            html_text = requests.get(URL).text
+            return True
+        except:
+            return False
         
     
     def set_URL(self, URL):
@@ -45,6 +52,8 @@ if __name__ == "__main__":
     
     scraping = Scraping()
     scraping.set_URL(URL)
-    urls = scraping.scraping_keyword()
+    
+    URL ="a"
+    Scraping.check_valid_URL(URL)
     
     

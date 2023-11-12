@@ -18,12 +18,14 @@ class Crawler():
         
         searched_URLs   :list[str]  = []
         NO_searched_URLs:list[str]  = [start_URL]
-        title           :list[str]  = []
-        keyword         :list[str]  = []
-        parameter       :dict[str]  = []
-        pages           :list[Page] = []
-        URL             :str        = start_URL
-        scraping        :Scraping   = Scraping()
+        
+        title    :list[str]  = []
+        keyword  :list[str]  = []
+        parameter:dict[str]  = []
+        pages    :list[Page] = []
+        
+        URL      :str        = start_URL
+        scraping :Scraping   = Scraping()
         
         """
         テスト用
@@ -70,14 +72,16 @@ class Crawler():
             テスト用
             """
             print(test_count)
-            if test_count > 20:
+            if test_count > 5:
                 return pages
-        
+    
+    
             
 if __name__ == "__main__":
     start_URL     = "https://animestore.docomo.ne.jp/animestore/tp_pc"
     target_domins = ["animestore.docomo.ne.jp", 
                      "https://animestore.docomo.ne.jp/animestore/ci_pc?workId=26636"]
+    target_domins = []
     pages = Crawler.crawler(
         start_URL     = start_URL,
         target_domins = target_domins
