@@ -76,7 +76,7 @@ class View1(ft.View):
             controls.append(ft.Text(f'元URL : {view_page.my_URL}'))
             
             for URL in view_page.URL:#URLの表示
-                controls.append(ft.Text(f'URL : {URL}'))
+                controls.append(ft.Text(f'URL : {URL}', selectable=True))
                 
             for title in view_page.title:#タイトルの表示
                 controls.append(ft.Text(f'title : {title}'))
