@@ -1,5 +1,4 @@
 import flet as ft
-# from time import sleep
 from class_file.Page_class     import Page
 from class_file.Crawler_class  import Crawler
 from class_file.Scraping_class import Scraping
@@ -52,7 +51,7 @@ class Top(ft.View):
 
     def button_clicked(self,e):
         URL = self.start_URL.current.value
-        #stayt_URLが空なら何もしない
+        #start_URLが空なら何もしない
         if URL == "" or Scraping.check_valid_URL(URL) == False:
             return
         self.controls.append(ft.ProgressBar(width=600,color="pink", bgcolor="#eeeeee",value=None)) #処理中表示
@@ -104,15 +103,11 @@ class View1(ft.View):
             if pages.keyword is True:
                 controls.append(ft.Text(f'{pages.keyword}, '))               
 
-            
-    
         
 def main(page: ft.Page):
     page.title         = "ごとうぐみ"
     page.window_width  = 650
     page.window_height = 1000
-    pb = ft.ProgressBar(width=500, color="pink", bgcolor="#eeeeee")
-    pb.value = None
 
     def route_change(route):
         if page.route == "/":
@@ -125,7 +120,6 @@ def main(page: ft.Page):
         elif page.route == "/view1":
             if page.views[-1].data[1] == [""]:
                 page.views[-1].data[1] = []
-            # page.views.append(pb)
             pages = Crawler.crawler(start_URL = page.views[-1].data[0], target_domins=page.views[-1].data[1])
             page.views.append(
                 View1(pages)
