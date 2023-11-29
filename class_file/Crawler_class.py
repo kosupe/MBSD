@@ -31,6 +31,7 @@ class Crawler():
         
         while True:
             URL = NO_searched_URLs.pop(0)
+            print(f"URL:{URL}")
             scraping.set_URL(URL)
             searched_URLs.append(URL)
             
@@ -56,9 +57,14 @@ class Crawler():
                 parameters = parameter                
             ))
             
+            print(searched_URLs)
             #探し出したURLを追加
             [NO_searched_URLs.append(url) for url in urls 
-             if url not in searched_URLs]
+             if url not in searched_URLs and url not in NO_searched_URLs]
+            
+            print(searched_URLs)
+                
+            
             
             #未探索のURLが無くなったら終了
             if NO_searched_URLs == []:

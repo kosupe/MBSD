@@ -8,6 +8,7 @@ class Top(ft.View):
         self.addcounter = 0
         start_URL      = ft.Ref[ft.TextField]()
         target_domains = [ft.Ref[ft.TextField]()]
+        self.search_start_button = ft.ElevatedButton("探索開始", on_click=self.button_clicked)
         controls = [
             ft.AppBar(title=ft.Text("Top Page"), bgcolor=ft.colors.SURFACE_VARIANT),
             ft.TextField(ref=start_URL,label="探索を開始するURLを入力してください",on_change=self.changed),
@@ -15,7 +16,7 @@ class Top(ft.View):
             ft.Row([
             ft.ElevatedButton("-",on_click=self.delbutton_clicked),
             ft.ElevatedButton("+",on_click=self.addbutton_clicked),
-            ft.ElevatedButton("探索開始", on_click=self.button_clicked),
+            self.search_start_button,
         ],alignment=ft.MainAxisAlignment.START,
         ),
         ]
@@ -53,6 +54,8 @@ class Top(ft.View):
         #stayt_URLが空なら何もしない
         if URL == "" or Scraping.check_valid_URL(URL) == False:
             return
+        self.search_start_button.disabled=True
+        self.update()
         domains = []
         for target_domain in self.target_domains:
             if target_domain.current.value in domains:
