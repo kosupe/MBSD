@@ -1,4 +1,5 @@
 import flet as ft
+# from time import sleep
 from class_file.Page_class     import Page
 from class_file.Crawler_class  import Crawler
 from class_file.Scraping_class import Scraping
@@ -6,6 +7,8 @@ from class_file.Scraping_class import Scraping
 class Top(ft.View):
     def __init__(self):
         self.addcounter = 0
+        pb = ft.ProgressBar(width=500, color="pink", bgcolor="#eeeeee")
+        pb.value = None
         start_URL      = ft.Ref[ft.TextField]()
         target_domains = [ft.Ref[ft.TextField]()]
         self.search_start_button = ft.ElevatedButton("探索開始", on_click=self.button_clicked)
@@ -25,8 +28,6 @@ class Top(ft.View):
         self.start_URL = start_URL
         self.target_domains = target_domains
         
-        self.start_URL.current.value = "https://animestore.docomo.ne.jp/animestore/tp_pc"
-        self.target_domains[0].current.value = "animestore.docomo.ne.jp"
     def delbutton_clicked(self,e):
         if self.addcounter <= 0:#ドメイン入力欄を削除する。最低１つは残す
             return
@@ -54,16 +55,17 @@ class Top(ft.View):
         #stayt_URLが空なら何もしない
         if URL == "" or Scraping.check_valid_URL(URL) == False:
             return
+        self.controls.append(ft.ProgressBar(width=600,color="pink", bgcolor="#eeeeee",value=None)) #処理中表示
         self.search_start_button.disabled=True
         self.update()
         domains = []
-        for target_domain in self.target_domains:
+        for target_domain in self.target_domains:#指定したドメインを一つの配列にまとめる
             if target_domain.current.value in domains:
                 continue
             domains.append(target_domain.current.value)
             
         self.data = [URL, domains]
-        e.page.go("/view1")
+        e.page.go("/view1")#ページ遷移
     
     def changed(self, e):
         self.data = e.control.value
@@ -87,18 +89,21 @@ class View1(ft.View):
 
             for keyword in view_page.keyword:#キーワードの表示                
                 controls.append(ft.Text(f'keyword : {keyword}'))
-
-            """for parameters in view_page.parameters:#パラメータの表示
-                controls.append(ft.Text(f'parameters : {parameters}'))
-            """
             
-            controls.append(ft.Text("parameters : {"))
+            controls.append(ft.Text("parameters : {"))#パラメータの表示
             for key in view_page.parameters:
                controls.append(ft.Text(f"    {key} : {view_page.parameters[key]}"))
             controls.append(ft.Text("}"))
             
             controls.append(ft.Text(f'',size=10))
             page_count += 1#カウントアップ
+
+        #最後にキーワード一覧出力
+        controls.append(ft.Text('[keyword]'))
+        for pages in pages:
+            if pages.keyword is True:
+                controls.append(ft.Text(f'{pages.keyword}, '))               
+
             
     
         
@@ -106,30 +111,26 @@ def main(page: ft.Page):
     page.title         = "ごとうぐみ"
     page.window_width  = 650
     page.window_height = 1000
-    pop_flag = False
+    pb = ft.ProgressBar(width=500, color="pink", bgcolor="#eeeeee")
+    pb.value = None
 
     def route_change(route):
-        nonlocal pop_flag
-
-        if pop_flag:
-            pop_flag = False
-        else:
-            if page.route == "/":
-                print('top')
-                
-                page.views.clear()
-                page.update()
-                page.views.append(
-                    Top()
-                )
-            elif page.route == "/view1":
-                print('view1')
-                if page.views[-1].data[1] == [""]:
-                    page.views[-1].data[1] = []
-                pages = Crawler.crawler(start_URL = page.views[-1].data[0], target_domins=page.views[-1].data[1])
-                page.views.append(
-                    View1(pages)
-                )
+        if page.route == "/":
+            print('topですよ')
+            page.views.clear()
+            page.update()
+            page.views.append(
+                Top()
+            )
+        elif page.route == "/view1":
+            if page.views[-1].data[1] == [""]:
+                page.views[-1].data[1] = []
+            # page.views.append(pb)
+            pages = Crawler.crawler(start_URL = page.views[-1].data[0], target_domins=page.views[-1].data[1])
+            page.views.append(
+                View1(pages)
+            )
+            print('view1ですよ')
         
     def view_pop(e):
         page.views.pop()
